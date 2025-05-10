@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import {
   Box,
   Container,
   Typography,
-  Grid,
   Card,
   CardMedia,
   CardContent,
@@ -13,15 +13,25 @@ import {
   MenuItem,
   Select,
   Button,
+  Grid,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import Slider from "react-slick";
+
+// Import react-slick styles
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // Import images
 import image4 from "../Images/14.jpeg";
 import image5 from "../Images/lap1.jpg";
 import image6 from "../Images/R1.avif";
 import image7 from "../Images/lap.jpg";
-import Footer from "./Footer";
+import image8 from "../Images/Mobile.jpg";
+import image9 from "../Images/jbls.png";
+import image10 from "../Images/lap3.avif";
+import image11 from "../Images/pix.png";
+
 
 const items = [
   {
@@ -39,52 +49,68 @@ const items = [
     title: "Secure Data Wipe",
     subtitle: "Your data, safely erased.",
   },
+  {
+    image: image8,
+    title: "Device Recycling",
+    subtitle: "Eco-friendly recycling solutions",
+  },
+  {
+    image: image9,
+    title: "Laptop Repair",
+    subtitle: "Affordable device repairs",
+  },
+  {
+    image: image10,
+    title: "Battery Replacement",
+    subtitle: "Extend device life with new batteries",
+  },
+  {
+    image: image6,
+    title: "Screen Replacement",
+    subtitle: "Fix cracked screens quickly",
+  },
 ];
 
 const TradeIn = () => {
   const [searchTerm, setSearchTerm] = useState("");
-    // State hooks to manage selected values for Capacity, Processor, and Memory
   const [capacity, setCapacity] = useState("");
   const [processor, setProcessor] = useState("");
   const [memory, setMemory] = useState("");
+  const [version, setVersion] = useState("");
+
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
 
   const filteredItems = items.filter((item) =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
-   const [version, setVersion] = useState(""); // New state for Version
 
-  // Handle Confirm button click
   const handleConfirm = () => {
-    // You can add your logic here, like sending the data to an API or logging it
-    console.log({
-      capacity,
-      processor,
-      memory,
-      version,
-    });
+    console.log({ capacity, processor, memory, version });
   };
 
-   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [messageVisible, setMessageVisible] = useState(true);
-
-  // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault();  // Prevent page reload on form submission
-
-    // Show confirmation message
+    e.preventDefault();
     setMessageVisible(true);
-
-    // You can also perform further logic like sending data to an API here
-    console.log({
-      name,
-      phone,
-      email,
-      address,
-    });
+    console.log({ name, phone, email, address });
   };
+
+  // Carousel settings
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    responsive: [
+      { breakpoint: 960, settings: { slidesToShow: 2 } },
+      { breakpoint: 600, settings: { slidesToShow: 1 } },
+    ],
+  };
+
   return (
     <>
       <Navbar />
@@ -99,7 +125,7 @@ const TradeIn = () => {
             Select Your Device Here
           </Typography>
 
-          {/* Search Input with icon on right */}
+          {/* Search bar */}
           <Box display="flex" justifyContent="center" my={4}>
             <TextField
               label="Search Device"
@@ -115,11 +141,21 @@ const TradeIn = () => {
               }}
             />
           </Box>
-
-          {/* Grid with 4 items */}
-          <Grid container spacing={4} justifyContent="center">
+              <Box sx={{
+        '& .slick-slide > div': {
+          padding: '0 8px', // Adds gap between cards (16px total)
+        },
+        '& .slick-dots li button:before': {
+          color: '#3a511e',
+        },
+        '& .slick-dots li.slick-active button:before': {
+          color: '#3a511e',
+        },
+      }}>
+         {/* Carousel */}
+          <Slider {...settings}>
             {filteredItems.map((item, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
+              <Box key={index} sx={{ px: 5, py: 1 }}>
                 <Card
                   sx={{
                     boxShadow: 3,
@@ -152,12 +188,19 @@ const TradeIn = () => {
                       {item.subtitle}
                     </Typography>
                   </CardContent>
+                  <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+                    <Button variant="contained" color="primary">
+                      Select
+                    </Button>
+                  </Box>
                 </Card>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
-          {/* Can't Find Section */}
-          {/* Can't Find Section */}
+          </Slider>
+      </Box>
+         
+
+          {/* Can't find device section */}
           <Box sx={{ mt: 10, textAlign: "center" }}>
             <Typography variant="h5" sx={{ fontWeight: "bold", mb: 1 }}>
               Can't Find Your Device?
@@ -166,7 +209,6 @@ const TradeIn = () => {
               Send us the details and we’ll get back to you.
             </Typography>
 
-            {/* Contact Form */}
             <Box
               component="form"
               sx={{
@@ -192,8 +234,6 @@ const TradeIn = () => {
                 fullWidth
                 required
               />
-
-              {/* Centered Submit Button */}
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <button
                   type="submit"
@@ -213,25 +253,20 @@ const TradeIn = () => {
           </Box>
         </Container>
       </Box>
-      {/* Select Your Device Details */}
-<Box sx={{ py: 8, backgroundColor: "#e8f5e9" }}>
-  <Container maxWidth="lg">
-    <Typography
-      variant="h4"
-      align="center"
-      gutterBottom
-      sx={{ fontWeight: "bold", color: "#33691e" }}
-    >
-      Select Your Device Details
-    </Typography>
 
-    {/* Dropdowns for Capacity, Processor, and Memory */}
-    <Box sx={{ py: 8, backgroundColor: "#e8f5e9" }}>
+      {/* Select Device Details */}
+      <Box sx={{ py: 8, backgroundColor: "#e8f5e9" }}>
         <Container maxWidth="lg">
-       
+          <Typography
+            variant="h4"
+            align="center"
+            gutterBottom
+            sx={{ fontWeight: "bold", color: "#33691e" }}
+          >
+            Select Your Device Details
+          </Typography>
 
-          {/* Dropdowns for Capacity, Processor, Memory, and Version */}
-          <Box display="flex" justifyContent="center" gap={4} sx={{ mb: 6 }}>
+          <Box display="flex" justifyContent="center" gap={4} sx={{ mb: 6, flexWrap: "wrap" }}>
             {/* Capacity */}
             <Box sx={{ width: "200px" }}>
               <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>
@@ -241,7 +276,7 @@ const TradeIn = () => {
                 fullWidth
                 variant="outlined"
                 value={capacity}
-                onChange={(e) => setCapacity(e.target.value)} // Use setCapacity to update state
+                onChange={(e) => setCapacity(e.target.value)}
               >
                 <MenuItem value="">Select Capacity</MenuItem>
                 <MenuItem value="64GB">64GB</MenuItem>
@@ -260,7 +295,7 @@ const TradeIn = () => {
                 fullWidth
                 variant="outlined"
                 value={processor}
-                onChange={(e) => setProcessor(e.target.value)} // Use setProcessor to update state
+                onChange={(e) => setProcessor(e.target.value)}
               >
                 <MenuItem value="">Select Processor</MenuItem>
                 <MenuItem value="Intel i5">Intel i5</MenuItem>
@@ -279,7 +314,7 @@ const TradeIn = () => {
                 fullWidth
                 variant="outlined"
                 value={memory}
-                onChange={(e) => setMemory(e.target.value)} // Use setMemory to update state
+                onChange={(e) => setMemory(e.target.value)}
               >
                 <MenuItem value="">Select Memory</MenuItem>
                 <MenuItem value="4GB">4GB</MenuItem>
@@ -298,7 +333,7 @@ const TradeIn = () => {
                 fullWidth
                 variant="outlined"
                 value={version}
-                onChange={(e) => setVersion(e.target.value)} // Use setVersion to update state
+                onChange={(e) => setVersion(e.target.value)}
               >
                 <MenuItem value="">Select Version</MenuItem>
                 <MenuItem value="1.0">1.0</MenuItem>
@@ -322,11 +357,10 @@ const TradeIn = () => {
           </Box>
         </Container>
       </Box>
-  </Container>
-</Box>
- <Box sx={{ py: 8, backgroundColor: "#FFFF" }}>
+
+      {/* Pickup Address */}
+      <Box sx={{ py: 8, backgroundColor: "#ffffff" }}>
         <Container maxWidth="lg">
-          {/* Confirm Your Pic Address Section */}
           <Typography
             variant="h4"
             align="center"
@@ -336,7 +370,6 @@ const TradeIn = () => {
             Confirm Your Pickup Address
           </Typography>
 
-          {/* Form for Name, Phone, Email, Address */}
           <form onSubmit={handleSubmit}>
             <Grid container spacing={4} justifyContent="center">
               <Grid item xs={12} sm={6} md={4}>
@@ -383,21 +416,14 @@ const TradeIn = () => {
                 />
               </Grid>
 
-              {/* Submit Button */}
               <Grid item xs={12} sm={6} md={4}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  sx={{ width: "100%" }}
-                >
+                <Button type="submit" variant="contained" color="primary" sx={{ width: "100%" }}>
                   Submit
                 </Button>
               </Grid>
             </Grid>
           </form>
 
-          {/* Confirmation Message */}
           {messageVisible && (
             <Box mt={4} textAlign="center">
               <Typography variant="h4" color="success.main">
@@ -407,7 +433,7 @@ const TradeIn = () => {
           )}
         </Container>
       </Box>
-<Footer />
+      <Footer />
     </>
   );
 };

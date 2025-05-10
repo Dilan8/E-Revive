@@ -19,9 +19,12 @@ import {
   DialogActions,
   Divider,
   ListItemAvatar,
+  Stack,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
+import EditIcon from "@mui/icons-material/Edit";
+import RedeemIcon from "@mui/icons-material/Redeem";
 import { useNavigate, Link } from "react-router-dom";
 
 const navItems = [
@@ -30,6 +33,7 @@ const navItems = [
   { label: "Schedule Pickup", path: "/schedulepickup" },
   { label: "Trade In", path: "/tradein" },
   { label: "Learn", path: "/learn" },
+  { label: "About us", path: "/about" },
 ];
 
 const Navbar = () => {
@@ -37,13 +41,16 @@ const Navbar = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    navigate("/");
-  };
+  const handleLogout = () => navigate("/");
   const handleProfileOpen = () => setProfileOpen(true);
-  const handleProfileClose = () => setProfileOpen(false);
+  const handleProfileClose = () => {
+    setProfileOpen(false);
+    setEditMode(false);
+  };
+  const toggleEditMode = () => setEditMode((prev) => !prev);
 
   // Dummy user data
   const user = {
@@ -67,11 +74,7 @@ const Navbar = () => {
               <IconButton edge="end" color="inherit" onClick={() => setDrawerOpen(true)}>
                 <MenuIcon />
               </IconButton>
-              <Drawer
-                anchor="right"
-                open={drawerOpen}
-                onClose={() => setDrawerOpen(false)}
-              >
+              <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                 <Box width={250} role="presentation" onClick={() => setDrawerOpen(false)}>
                   <List>
                     {navItems.map(({ label, path }) => (
@@ -85,6 +88,9 @@ const Navbar = () => {
                         <Avatar sx={{ bgcolor: "#1b5e20" }}>U</Avatar>
                       </ListItemAvatar>
                       <ListItemText primary="Profile" />
+                      <IconButton size="small" onClick={toggleEditMode}>
+                        <EditIcon fontSize="small" />
+                      </IconButton>
                     </ListItem>
                     <ListItem button onClick={handleLogout}>
                       <LogoutIcon sx={{ mr: 1 }} />
@@ -107,11 +113,7 @@ const Navbar = () => {
               <Button
                 onClick={handleLogout}
                 variant="outlined"
-                sx={{
-                  color: "white",
-                  borderColor: "white",
-                  "&:hover": { borderColor: "#c8e6c9" },
-                }}
+                sx={{ color: "white", borderColor: "white", "&:hover": { borderColor: "#c8e6c9" } }}
               >
                 Logout
               </Button>
@@ -122,13 +124,30 @@ const Navbar = () => {
 
       {/* Profile Dialog */}
       <Dialog open={profileOpen} onClose={handleProfileClose} maxWidth="xs" fullWidth>
-        <DialogTitle>User Profile</DialogTitle>
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          {editMode ? 'Edit Profile' : 'User Profile'}
+          <IconButton size="small" onClick={toggleEditMode}>
+            <EditIcon />
+          </IconButton>
+        </DialogTitle>
         <DialogContent dividers>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
             <Avatar sx={{ bgcolor: '#1b5e20', width: 56, height: 56, mr: 2 }}>U</Avatar>
             <Box>
-              <Typography variant="h6">{user.name}</Typography>
-              <Typography variant="body2" color="text.secondary">{user.email}</Typography>
+              <Typography variant="h6">
+                {editMode ? (
+                  <input defaultValue={user.name} style={{ fontSize: '1rem', width: '100%' }} />
+                ) : (
+                  user.name
+                )}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {editMode ? (
+                  <input defaultValue={user.email} style={{ fontSize: '0.875rem', width: '100%' }} />
+                ) : (
+                  user.email
+                )}
+              </Typography>
             </Box>
           </Box>
           <Divider sx={{ my: 2 }} />
@@ -146,11 +165,21 @@ const Navbar = () => {
           </List>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleProfileClose} color="primary">Close</Button>
+          <Stack direction="row" spacing={1} sx={{ width: '100%', justifyContent: 'space-between', px: 2, pb: 2 }}>
+            {editMode && <Button variant="contained" size="small" onClick={handleProfileClose}>Save</Button>}
+            <Button onClick={handleProfileClose} color="primary" size="small">
+              {editMode ? 'Cancel' : 'Close'}
+            </Button>
+            {!editMode && (
+              <Button startIcon={<RedeemIcon />} variant="outlined" size="small">
+                Redeem
+              </Button>
+            )}
+          </Stack>
         </DialogActions>
       </Dialog>
     </>
   );
 };
 
-export default Navbar;
+export default Navbar;  

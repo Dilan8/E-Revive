@@ -1,49 +1,83 @@
-import React from "react";
-import { Box, Grid, Typography, Container, Paper } from "@mui/material";
+// LearnPage.js
+
+import React, { useState } from "react";
+import {
+  Box,
+  Grid,
+  Typography,
+  Container,
+  Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
+
+// Your images
 import image4 from "../Images/14.jpeg";
 import image5 from "../Images/lap1.jpg";
 import image6 from "../Images/R1.avif";
 import image7 from "../Images/sec1.jpg";
 import image8 from "../Images/AI.jpg";
 import image9 from "../Images/test.jpg";
-import Footer from "./Footer";
 
+// Your items array
 const items = [
-
   {
     img: image4,
-    title: "Easy Interface",
-    desc: "User-friendly interface for smooth navigation.",
+    title: "Guide E-waste",
+    desc: "Guide to ewaste management",
+    more: "Learn how to properly dispose and manage electronic waste to help protect the environment and conserve resources.",
   },
   {
     img: image5,
-    title: "Reliable Support",
-    desc: "24/7 customer support to assist you anytime.",
+    title: "Learn",
+    desc: "Learn how to recycle e-wastes.",
+    more: "Understand step-by-step recycling techniques and contribute to a cleaner planet with responsible e-waste handling.",
   },
-   {
+  {
     img: image6,
-    title: "Fast Performance",
-    desc: "User-friendly interface for smooth navigation.",
+    title: "Daily Dose",
+    desc: "Daily Dose of knowledge of e-waste management",
+    more: "Stay informed with daily tips and facts about effective electronic waste management practices and innovations.",
   },
   {
     img: image7,
-    title: "Secure Transactions",
-    desc: "24/7 customer support to assist you anytime.",
+    title: "Quiz",
+    desc: "Take a quiz now and win rewards",
+    more: "Test your knowledge on sustainability and e-waste management by participating in interactive quizzes and challenges.",
   },
   {
     img: image8,
-    title: "Test Performance",
-    desc: "User-friendly interface for smooth navigation.",
+    title: "Learn more!",
+    desc: "Learn more about sustainability.",
+    more: "Explore deeper insights into sustainable living and discover actionable steps towards a greener future.",
   },
   {
     img: image9,
-    title: "AI learn",
-    desc: "24/7 customer support to assist you anytime.",
+    title: "Did you know?",
+    desc: "Did you know about E-waste?",
+    more: "Electronic waste is the fastest-growing waste stream globally — learning about it empowers smarter, eco-friendly decisions.",
   },
 ];
 
 const LearnPage = () => {
+  const [open, setOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const handleOpen = (item) => {
+    setSelectedItem(item);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedItem(null);
+  };
+
   return (
     <>
       <Navbar />
@@ -68,9 +102,15 @@ const LearnPage = () => {
                     alignItems: "center",
                     padding: 2,
                     borderRadius: 2,
-                    height: "200px", // Ensure all cards are same height
+                    height: "200px",
                     boxSizing: "border-box",
+                    cursor: "pointer",
+                    transition: "transform 0.2s",
+                    "&:hover": {
+                      transform: "scale(1.03)",
+                    },
                   }}
+                  onClick={() => handleOpen(item)}
                 >
                   <Box
                     sx={{
@@ -117,11 +157,11 @@ const LearnPage = () => {
                       color="text.secondary"
                       sx={{
                         display: "-webkit-box",
-                        WebkitLineClamp: 3, // Limit to 3 lines of text
+                        WebkitLineClamp: 3,
                         WebkitBoxOrient: "vertical",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
-                        flexGrow: 1, // Allow description to grow to fill available space
+                        flexGrow: 1,
                       }}
                     >
                       {item.desc}
@@ -133,9 +173,60 @@ const LearnPage = () => {
           </Grid>
         </Container>
       </Box>
-      <Footer/>
-    </>
 
+      {/* Modal/Dialog */}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            backgroundColor: "#e8f5e9", // light green
+            borderRadius: 3,
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            backgroundColor: "#c8e6c9",
+            mb: 1,
+          }}
+        >
+          {selectedItem?.title}
+          <IconButton onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+          {selectedItem && (
+            <>
+              <Box
+                component="img"
+                src={selectedItem.img}
+                alt={selectedItem.title}
+                sx={{
+                  width: "100%",
+                  height: "250px",
+                  objectFit: "cover",
+                  borderRadius: 2,
+                  mb: 2,
+                }}
+              />
+              <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>
+                {selectedItem.desc}
+              </Typography>
+              <Typography variant="body2">{selectedItem.more}</Typography>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Footer />
+    </>
   );
 };
 

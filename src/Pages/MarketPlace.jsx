@@ -1,58 +1,38 @@
+// MarketplacePage.jsx
 import React, { useState } from "react";
-import image1 from "../Images/e1.jpg"; // Replace with actual image paths
-import image2 from "../Images/e2.webp"; // Replace with actual image paths
-import image3 from "../Images/e3.jpg"; // Replace with actual image paths
-import image4 from "../Images/e4.jpg"; // Replace with actual image paths
-import image5 from "../Images/ear.jpg"; // Replace with actual image paths
-import image6 from "../Images/jbls.png"; // Replace with actual image paths
-import image7 from "../Images/cvv.webp"; // Replace with actual image paths
+import image1 from "../Images/lap3.avif";
+import image2 from "../Images/Mobile.jpg";
+import image3 from "../Images/moni2.jpg";
+import image4 from "../Images/pix.png";
+import image5 from "../Images/ear.jpg";
+import image6 from "../Images/len.jpg";
+import image7 from "../Images/cvv.webp";
 
 import Footer from "./Footer";
-import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover } from "react-icons/fa";
-import { motion } from "framer-motion";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Menu,
-  MenuItem,
-  Button,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  useMediaQuery,
-  useTheme,
-  Avatar,
-  Grid,
-  Container,
-  TextField,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import LogoutIcon from "@mui/icons-material/Logout";
-import SearchIcon from "@mui/icons-material/Search";
-import { InputAdornment } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 
-const navItems = [
-  "Home",
-  "Marketplace",
-  "Schedule Pickup",
-  "Trade In",
-  "Learn",
-];
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  InputAdornment,
+  Dialog,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const MarketplacePage = () => {
-  const theme = useTheme();
   const [searchTerm, setSearchTerm] = useState("");
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const navigate = useNavigate();
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  // Dialog popup
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogItem, setDialogItem] = useState(null);
 
   const handleBuy = (item) => {
     setSelectedItem(item);
@@ -63,45 +43,58 @@ const MarketplacePage = () => {
     setShowPaymentForm(false);
     setSelectedItem(null);
   };
-  const handleLogout = () => {
-    navigate("/");
+
+  const handleImageClick = (item) => {
+    setDialogItem(item);
+    setOpenDialog(true);
   };
 
-
-  const handleNavClick = (item) => {
-    if (item === "Marketplace") navigate("/marketplace");
-    else if (item === "Home") navigate("/home");
-    else if (item === "Schedule Pickup") navigate("/schedulepickup")
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+    setDialogItem(null);
   };
 
+  // Items with Title + Description + Price
   const items = [
     {
       img: image1,
-      title: "Blander",
+      title: "HP 17-cp3001",
+      description: "Second hand, 3 months usage, 1 year warranty",
+      price: "$4500",
     },
     {
       img: image2,
-      title: "Dishes",
+      title: "Iphone 11",
+      description: "Second hand, 2 months usage, 2 year Apple warranty",
+      price: "$1000",
     },
     {
       img: image3,
-      title: "Bike",
+      title: "ViewSonic Monitor",
+      description: "Second hand, 2 months usage, 2 year warranty",
+      price: "$300",
     },
     {
       img: image4,
-      title: "Electric Bike",
+      title: "Pixel 9 Pro",
+      description: "Brand New, 128GB, 2 year warranty, 16GB RAM",
+      price: "$2999",
     },
     {
       img: image5,
-      title: "Bluetooth Earbuds",
+      title: "Bluetooth Earbuds Sonic",
+      description: "Second hand, 2 months usage, No warranty",
+      price: "$350",
     },
     {
       img: image6,
-      title: "Bluetooth Earbuds",
+      title: "Legion",
+      description: "Brand New, 128GB, 2 year warranty, 16GB RAM",
+      price: "$890",
     },
   ];
 
-   const filteredItems = items.filter((item) =>
+  const filteredItems = items.filter((item) =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -110,11 +103,8 @@ const MarketplacePage = () => {
       <Navbar />
       <Box sx={{ p: 4, backgroundColor: "#f1f8e9", minHeight: "100vh" }}>
         <Container maxWidth="md">
-
-          {/* Show either marketplace or payment form */}
           {!showPaymentForm ? (
             <>
-              {/* Search Bar Section */}
               <Box sx={{ mb: 4, display: "flex", justifyContent: "center" }}>
                 <Box
                   sx={{
@@ -148,7 +138,6 @@ const MarketplacePage = () => {
                       ),
                     }}
                   />
-
                   <Button
                     fullWidth
                     variant="contained"
@@ -161,7 +150,6 @@ const MarketplacePage = () => {
                 </Box>
               </Box>
 
-              {/* Available Items */}
               <Typography
                 variant="h5"
                 gutterBottom
@@ -177,24 +165,38 @@ const MarketplacePage = () => {
 
               <Grid container spacing={4} justifyContent="center">
                 {filteredItems.map((item, index) => (
-                  <Grid item xs={12} sm={6} key={index}>
-                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                  <Grid item xs={12} sm={6} md={4} key={index}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        backgroundColor: "#ffffff",
+                        borderRadius: 2,
+                        boxShadow: 2,
+                        textAlign: "center",
+                      }}
+                    >
                       <img
                         src={item.img}
                         alt={item.title}
                         style={{
-                          width: "80%",
-                          height: "200px",
+                          width: "100%",
+                          height: "180px",
                           objectFit: "cover",
                           borderRadius: "8px",
-                          boxShadow: "2px 2px 8px rgba(0,0,0,0.2)",
+                          marginBottom: "10px",
+                          cursor: "pointer",
                         }}
+                        onClick={() => handleImageClick(item)}
                       />
-                    </Box>
-                    <Typography variant="body1" align="center" sx={{ mt: 2 }}>
-                      {item.title}
-                    </Typography>
-                    <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
+                      <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+                        {item.title}
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: "#4e4e4e", mb: 1 }}>
+                        {item.description}
+                      </Typography>
+                      <Typography variant="subtitle1" sx={{ color: "#2e7d32", fontWeight: "bold", mb: 2 }}>
+                        {item.price}
+                      </Typography>
                       <Button
                         variant="contained"
                         color="success"
@@ -207,7 +209,6 @@ const MarketplacePage = () => {
                   </Grid>
                 ))}
               </Grid>
-
             </>
           ) : (
             <motion.div
@@ -221,7 +222,6 @@ const MarketplacePage = () => {
                 <FaCcAmex size={40} color="#1565c0" />
                 <FaCcDiscover size={40} color="#f57c00" />
               </Box>
-              {/* Payment Form */}
 
               <Typography
                 variant="subtitle1"
@@ -273,7 +273,7 @@ const MarketplacePage = () => {
                         endAdornment: (
                           <InputAdornment position="end">
                             <img
-                              src={image7} // replace with your CVV image path
+                              src={image7}
                               alt="CVV info"
                               style={{ width: 30, height: 20 }}
                             />
@@ -307,8 +307,61 @@ const MarketplacePage = () => {
             </motion.div>
           )}
         </Container>
+
+        {/* Dialog popup */}
+        <Dialog open={openDialog} onClose={handleDialogClose} maxWidth="sm" fullWidth>
+          {dialogItem && (
+            <Box sx={{ p: 3 }}>
+              <Typography variant="h5" sx={{ mb: 2, textAlign: "center", color: "#2e7d32" }}>
+                {dialogItem.title}
+              </Typography>
+              <Box
+                component="img"
+                src={dialogItem.img}
+                alt={dialogItem.title}
+                sx={{
+                  width: "100%",
+                  height: "200px",
+                  objectFit: "cover",
+                  borderRadius: 2,
+                  boxShadow: 2,
+                  mb: 2,
+                }}
+              />
+              <Typography variant="body1" sx={{ textAlign: "center", color: "#4e4e4e", mb: 1 }}>
+                {dialogItem.description}
+              </Typography>
+              <Typography variant="h6" sx={{ textAlign: "center", color: "#2e7d32", fontWeight: "bold", mb: 2 }}>
+                Price: {dialogItem.price}
+              </Typography>
+
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{ borderRadius: 2, mx: 1 }}
+                  onClick={() => {
+                    handleBuy(dialogItem.title);
+                    handleDialogClose();
+                  }}
+                >
+                  Buy Now
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  sx={{ borderRadius: 2, mx: 1 }}
+                  onClick={handleDialogClose}
+                >
+                  Close
+                </Button>
+              </Box>
+            </Box>
+          )}
+        </Dialog>
+
       </Box>
-      <Footer /> {/* Add Footer here */}
+      <Footer />
     </>
   );
 };
