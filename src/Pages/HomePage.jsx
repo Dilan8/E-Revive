@@ -21,13 +21,11 @@ import {
   CardMedia,
   Card,
   CardContent,
-  Rating ,
+  Rating,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
-import sampleImage from "../Images/con1.webp"; 
-import sampleImage1 from "../Images/home1.avif"; 
+import sampleImage from "../Images/con1.webp";
+import sampleImage1 from "../Images/home1.avif";
 import image1 from "../Images/R1.avif";
 import image2 from "../Images/R2.avif";
 import image3 from "../Images/R3.avif";
@@ -47,7 +45,7 @@ import {
 } from "@mui/icons-material"; // Importing Material Icons
 import Footer from "./Footer";
 import Navbar from "./Navbar";
-
+import { motion } from "framer-motion";
 const navItems = [
   "Home",
   "Marketplace",
@@ -68,8 +66,8 @@ const HomePage = () => {
 
   return (
     <>
- 
-     <Navbar />
+
+      <Navbar />
       {/* Dummy content */}
 
       <Box sx={{ p: 4, backgroundColor: "#f1f8e9" }}>
@@ -81,7 +79,7 @@ const HomePage = () => {
               gutterBottom
               sx={{ color: "#2e7d32", fontWeight: "bold" }}
             >
-              Welcome to GreenGo!
+              Welcome to E-REVIVE!
             </Typography>
             <Typography variant="body1" sx={{ color: "#4e4e4e" }}>
               We are committed to a greener future. Explore our marketplace,
@@ -110,7 +108,31 @@ const HomePage = () => {
           </Grid>
         </Grid>
       </Box>
-
+      <Box sx={{ py: 8, backgroundColor: "#e8f5e9" }}>
+        <Container maxWidth="md">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <Typography
+              variant="h4"
+              align="center"
+              gutterBottom
+              sx={{ color: "#2e7d32", fontWeight: "bold" }}
+            >
+              Why Choose E-REVIVE?
+            </Typography>
+            <Typography variant="body1" align="center" sx={{ color: "#4e4e4e", mt: 2 }}>
+              E-REVIVE is your one-stop platform to responsibly
+              manage e-waste, offering rewards, refurbished
+              devices, learning tools, and environmental Impact
+              tracking.
+            </Typography>
+          </motion.div>
+        </Container>
+      </Box>
       <Box sx={{ py: 8, backgroundColor: "#ffffff" }}>
         <Container maxWidth="md">
           {/* Paragraph */}
@@ -245,137 +267,137 @@ const HomePage = () => {
         </Container>
       </Box>
 
-     <Box sx={{ py: 8, backgroundColor: "#ffffff" }}>
-  <Container maxWidth="lg">
-    {/* Section Title */}
-    <Typography
-      variant="h4"
-      align="center"
-      gutterBottom
-      sx={{ fontWeight: "bold", color: "#33691e" }}
-    >
-      Customer Reviews
-    </Typography>
+      <Box sx={{ py: 8, backgroundColor: "#ffffff" }}>
+        <Container maxWidth="lg">
+          {/* Section Title */}
+          <Typography
+            variant="h4"
+            align="center"
+            gutterBottom
+            sx={{ fontWeight: "bold", color: "#33691e" }}
+          >
+            Customer Reviews
+          </Typography>
 
-    {/* Reviews Row - Flexbox */}
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        gap: 4,
-        flexWrap: "nowrap",
-        overflowX: "auto",
-        mt: 4,
-      }}
-    >
-      {/* Review 1 */}
-      <Card
-        sx={{
-          minWidth: 300,
-          boxShadow: 3,
-          borderRadius: 2,
-          p: 2,
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <CardMedia
-          component="img"
-          image={image1}
-          alt="Review 1"
-          sx={{
-            width: 100,
-            height: 100,
-            borderRadius: "50%",
-            objectFit: "cover",
-            mb: 2,
-          }}
-        />
-        <CardContent sx={{ textAlign: "center" }}>
-          <Typography sx={{ fontWeight: "bold" }}>
-            Emily, Melbourne
-          </Typography>
-          <Typography variant="body1">
-            I traded in my old phone and got credits for a refurbished laptop.
-            So easy!
-          </Typography>
-          <Rating name="review-1" value={5} readOnly sx={{ mt: 1 }} /> {/* 5 stars rating */}
-        </CardContent>
-      </Card>
+          {/* Reviews Row - Flexbox */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              gap: 4,
+              flexWrap: "nowrap",
+              overflowX: "auto",
+              mt: 4,
+            }}
+          >
+            {/* Review 1 */}
+            <Card
+              sx={{
+                minWidth: 300,
+                boxShadow: 3,
+                borderRadius: 2,
+                p: 2,
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <CardMedia
+                component="img"
+                image={image1}
+                alt="Review 1"
+                sx={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  mb: 2,
+                }}
+              />
+              <CardContent sx={{ textAlign: "center" }}>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Emily, Melbourne
+                </Typography>
+                <Typography variant="body1">
+                  I traded in my old phone and got credits for a refurbished laptop.
+                  So easy!
+                </Typography>
+                <Rating name="review-1" value={5} readOnly sx={{ mt: 1 }} /> {/* 5 stars rating */}
+              </CardContent>
+            </Card>
 
-      {/* Review 2 */}
-      <Card
-        sx={{
-          minWidth: 300,
-          boxShadow: 3,
-          borderRadius: 2,
-          p: 2,
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <CardMedia
-          component="img"
-          image={image2}
-          alt="Review 2"
-          sx={{
-            width: 100,
-            height: 100,
-            borderRadius: "50%",
-            objectFit: "cover",
-            mb: 2,
-          }}
-        />
-        <CardContent sx={{ textAlign: "center" }}>
-          <Typography sx={{ fontWeight: "bold" }}>David, VIC</Typography>
-          <Typography variant="body1">
-            The pickup was smooth, and I loved seeing my impact stats on the
-            dashboard!
-          </Typography>
-          <Rating name="review-2" value={4} readOnly sx={{ mt: 1 }} /> {/* 4 stars rating */}
-        </CardContent>
-      </Card>
+            {/* Review 2 */}
+            <Card
+              sx={{
+                minWidth: 300,
+                boxShadow: 3,
+                borderRadius: 2,
+                p: 2,
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <CardMedia
+                component="img"
+                image={image2}
+                alt="Review 2"
+                sx={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  mb: 2,
+                }}
+              />
+              <CardContent sx={{ textAlign: "center" }}>
+                <Typography sx={{ fontWeight: "bold" }}>David, VIC</Typography>
+                <Typography variant="body1">
+                  The pickup was smooth, and I loved seeing my impact stats on the
+                  dashboard!
+                </Typography>
+                <Rating name="review-2" value={4} readOnly sx={{ mt: 1 }} /> {/* 4 stars rating */}
+              </CardContent>
+            </Card>
 
-      {/* Review 3 */}
-      <Card
-        sx={{
-          minWidth: 300,
-          boxShadow: 3,
-          borderRadius: 2,
-          p: 2,
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <CardMedia
-          component="img"
-          image={image3}
-          alt="Review 3"
-          sx={{
-            width: 100,
-            height: 100,
-            borderRadius: "50%",
-            objectFit: "cover",
-            mb: 2,
-          }}
-        />
-        <CardContent sx={{ textAlign: "center" }}>
-          <Typography sx={{ fontWeight: "bold" }}>
-            Jhon, Melbourne
-          </Typography>
-          <Typography variant="body1">
-            E-Revive is the perfect mix of convenience, savings, and doing
-            good.
-          </Typography>
-          <Rating name="review-3" value={5} readOnly sx={{ mt: 1 }} /> {/* 5 stars rating */}
-        </CardContent>
-      </Card>
-    </Box>
-  </Container>
-</Box>
+            {/* Review 3 */}
+            <Card
+              sx={{
+                minWidth: 300,
+                boxShadow: 3,
+                borderRadius: 2,
+                p: 2,
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <CardMedia
+                component="img"
+                image={image3}
+                alt="Review 3"
+                sx={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  mb: 2,
+                }}
+              />
+              <CardContent sx={{ textAlign: "center" }}>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Jhon, Melbourne
+                </Typography>
+                <Typography variant="body1">
+                  E-Revive is the perfect mix of convenience, savings, and doing
+                  good.
+                </Typography>
+                <Rating name="review-3" value={5} readOnly sx={{ mt: 1 }} /> {/* 5 stars rating */}
+              </CardContent>
+            </Card>
+          </Box>
+        </Container>
+      </Box>
 
       <Box sx={{ p: 4, backgroundColor: "#f1f8e9" }}>
         <Grid container spacing={4} alignItems="center">
@@ -439,7 +461,7 @@ const HomePage = () => {
           <Grid item xs={12} md={6}>
             <Box
               component="img"
-              src={sampleImage}
+              src={sampleImage1}
               alt="Green Future"
               sx={{
                 width: "100%",
