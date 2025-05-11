@@ -216,6 +216,20 @@ const MarketplacePage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
             >
+               <Typography
+                variant="h5"
+                gutterBottom
+                sx={{ color: "#2e7d32", fontWeight: "bold", textAlign: "center", mb: 4 }}
+              >
+                Pay for {selectedItem}
+              </Typography>
+               <Typography
+                variant="subtitle1"
+                sx={{ color: "#2e7d32", mb: 1, textAlign: "center", fontWeight: 500 }}
+              >
+                We accept:
+              </Typography>
+              
               <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 3 }}>
                 <FaCcVisa size={40} color="#1a237e" />
                 <FaCcMastercard size={40} color="#ff6f00" />
@@ -223,19 +237,8 @@ const MarketplacePage = () => {
                 <FaCcDiscover size={40} color="#f57c00" />
               </Box>
 
-              <Typography
-                variant="subtitle1"
-                sx={{ color: "#2e7d32", mb: 1, textAlign: "center", fontWeight: 500 }}
-              >
-                We accept:
-              </Typography>
-              <Typography
-                variant="h5"
-                gutterBottom
-                sx={{ color: "#2e7d32", fontWeight: "bold", textAlign: "center", mb: 4 }}
-              >
-                Pay for {selectedItem}
-              </Typography>
+             
+             
 
               <Box
                 sx={{

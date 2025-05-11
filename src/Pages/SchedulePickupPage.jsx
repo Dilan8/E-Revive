@@ -3,64 +3,31 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
+import Navbar from "./Navbar";
 import {
-  AppBar,
   Box,
-  Toolbar,
-  IconButton,
-  Typography,
   Button,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  useMediaQuery,
-  useTheme,
-  Avatar,
-  Grid,
   Container,
   TextField,
+  Typography,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import LogoutIcon from "@mui/icons-material/Logout";
-import Navbar from "./Navbar";
-
-const navItems = [
-  "Home",
-  "Marketplace",
-  "Schedule Pickup",
-  "Trade In",
-  "Learn",
-];
 
 const SchedulePickupPage = () => {
-  const theme = useTheme();
   const [pickupDate, setPickupDate] = React.useState(null);
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    navigate("/");
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // handle form submission logic here
   };
 
-  const handleNavClick = (item) => {
-    if (item === "Home") navigate("/home");
-    else if (item === "Marketplace") navigate("/marketplace");
-    else if (item === "Schedule Pickup") navigate("/schedulepickup");
-  };
-
   return (
     <>
-      {/* Top Navigation Bar */}
-<Navbar />
+      <Navbar />
 
-      {/* Main Content */}
       <Box sx={{ p: 4, backgroundColor: "#f1f8e9" }}>
         <Container maxWidth="sm">
           <Typography
@@ -75,95 +42,86 @@ const SchedulePickupPage = () => {
             Please Send Us Your Pickup Details
           </Typography>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} sx={{p: 4}}>
-            <Grid spacing={2} >
-              {/* Name */}
-              <Grid sx={{m:4}}>
-                <TextField
-                  fullWidth
-                  label="Full Name"
-                  variant="outlined"
-                  required
-                />
-              </Grid>
-
-              {/* Phone */}
-              <Grid sx={{m:4}}>
-                <TextField
-                  fullWidth
-                  label="Phone Number"
-                  variant="outlined"
-                  required
-                />
-              </Grid>
+          <form onSubmit={handleSubmit}>
+            <Box display="flex" flexDirection="column" gap={2}>
+              {/* Full Name */}
+              <TextField
+                label="Full Name"
+                variant="outlined"
+                fullWidth
+                required
+              />
 
               {/* Email */}
-              <Grid item xs={2} sx={{m:4}}>
-                <TextField
-                  fullWidth
-                  label="Email Address"
-                  variant="outlined"
-                  required
-                />
-              </Grid>
+              <TextField
+                label="Email Address"
+                variant="outlined"
+                fullWidth
+                required
+              />
+
+              {/* Phone */}
+              <TextField
+                label="Phone Number"
+                variant="outlined"
+                fullWidth
+                required
+              />
 
               {/* Address */}
-              <Grid item xs={2} sx={{m:4}}>
-                <TextField
-                  fullWidth
-                  label="Your Address"
-                  variant="outlined"
-                  required
-                />
-              </Grid>
+              <TextField
+                label="Your Address"
+                variant="outlined"
+                fullWidth
+                required
+              />
 
               {/* Message */}
-              <Grid item xs={2} sx={{m:4}}>
-                <TextField
-                  fullWidth
-                  label="Your Message"
-                  variant="outlined"
-                  multiline
-                  rows={4}
-                />
-              </Grid>
+              <TextField
+                label="Your Message"
+                variant="outlined"
+                fullWidth
+                multiline
+                rows={4}
+              />
 
               {/* Pickup Date */}
-              <Grid item xs={2} sx={{m:4}}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                  sx={{width:485}}
-                    label="Pickup Date"
-                    value={pickupDate}
-                    onChange={(newDate) => setPickupDate(newDate)}
-                    renderInput={(params) => (
-                      <TextField {...params} fullWidth required />
-                    )}
-                  />
-                </LocalizationProvider>
-              </Grid>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  label="Pickup Date"
+                  value={pickupDate}
+                  onChange={(newDate) => setPickupDate(newDate)}
+                  renderInput={(params) => (
+                    <TextField {...params} fullWidth required />
+                  )}
+                />
+              </LocalizationProvider>
+
+              {/* Checkboxes */}
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox name="secureDataWipe" color="primary" />}
+                  label="Secure Data Wipe"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox name="componentExtraction" color="primary" />
+                  }
+                  label="Component Extraction"
+                />
+              </FormGroup>
 
               {/* Submit Button */}
-              <Grid item xs={12} sx={{m:4}}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="success"
-                  fullWidth
-                >
-                  Submit
-                </Button>
-              </Grid>
-            </Grid>
+              <Button type="submit" variant="contained" color="success">
+                Submit
+              </Button>
+            </Box>
           </form>
         </Container>
       </Box>
 
-      {/* Footer */}
       <Footer />
     </>
-    
   );
 };
 

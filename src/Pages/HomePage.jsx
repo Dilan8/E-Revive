@@ -31,7 +31,7 @@ import image2 from "../Images/R2.avif";
 import image3 from "../Images/R3.avif";
 import image4 from "../Images/comp.jpg";
 import image5 from "../Images/sec.jpg";
-import image6 from "../Images/hand.jpg";
+import image6 from "../Images/ewaste1.png";
 import image7 from "../Images/schedule.webp";
 import image8 from "../Images/rebup.webp";
 import image9 from "../Images/pickup.webp";
@@ -268,8 +268,8 @@ const HomePage = () => {
               },
               {
                 image: image6,
-                title: "Peer-to-Peer Marketplace",
-                subtitle: "Exchange devices directly,safely.",
+                title: "E-waste Educational Hub",
+                subtitle: "Learn and make less E-waste.",
               },
             ].map((item, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
