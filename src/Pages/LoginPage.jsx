@@ -24,6 +24,9 @@ import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { useNavigate } from "react-router-dom";
 
+// Import your image from src
+import loginBg from '../Images/loginw.jpg';
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const [showRegister, setShowRegister] = useState(false);
@@ -52,7 +55,9 @@ const LoginPage = () => {
     <>
       <Box
         sx={{
-          backgroundColor: "#e8f5e9",
+          backgroundImage: `url(${loginBg})`,   // Use imported image
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
           minHeight: "100vh",
           display: "flex",
           alignItems: "center",
@@ -60,7 +65,13 @@ const LoginPage = () => {
           p: 2,
         }}
       >
-        <Card sx={{ maxWidth: 400, width: "100%", boxShadow: 5, borderRadius: 3 }}>
+        <Card sx={{
+          maxWidth: 400,
+          width: "100%",
+          boxShadow: 5,
+          borderRadius: 3,
+          backgroundColor: 'rgba(255, 255, 255, 0.9)', // Transparent white for readability
+        }}>
           <CardContent>
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <Avatar sx={{ m: 1, bgcolor: "#43a047" }}>
