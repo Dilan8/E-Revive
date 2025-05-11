@@ -81,13 +81,19 @@ const LearnPage = () => {
   return (
     <>
       <Navbar />
-      <Box sx={{ py: 6, backgroundColor: "#f9fbe7", minHeight: "100vh" }}>
+      <Box
+        sx={{
+          py: 6,
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #a5d6a7, #388e3c)",
+        }}
+      >
         <Container maxWidth="lg">
           <Typography
             variant="h4"
             align="center"
             gutterBottom
-            sx={{ fontWeight: "bold", mb: 6 }}
+            sx={{ fontWeight: "bold", mb: 6, color: "white" }}
           >
             Learn About Our Features
           </Typography>
@@ -106,6 +112,7 @@ const LearnPage = () => {
                     boxSizing: "border-box",
                     cursor: "pointer",
                     transition: "transform 0.2s",
+                    backgroundColor: "rgba(255,255,255,0.9)",
                     "&:hover": {
                       transform: "scale(1.03)",
                     },

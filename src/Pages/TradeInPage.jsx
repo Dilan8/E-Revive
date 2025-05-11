@@ -24,50 +24,43 @@ import "slick-carousel/slick/slick-theme.css";
 
 // Import images
 import image4 from "../Images/14.jpeg";
-import image5 from "../Images/lap1.jpg";
-import image6 from "../Images/R1.avif";
+import image5 from "../Images/iPhone-11.webp";
+import image6 from "../Images/screen.webp";
 import image7 from "../Images/lap.jpg";
-import image8 from "../Images/Mobile.jpg";
-import image9 from "../Images/jbls.png";
-import image10 from "../Images/lap3.avif";
+import image8 from "../Images/pixel.jpg";
+import image9 from "../Images/Azure.jfif";
+import image10 from "../Images/view.jpg";
 import image11 from "../Images/pix.png";
 
 
 const items = [
   {
     image: image7,
-    title: "Trade-in Program",
-    subtitle: "Exchange old devices for rewards",
+    title: "HP Lap T00-ti",
   },
   {
     image: image4,
-    title: "Component Extraction",
-    subtitle: "Recover valuable parts sustainably",
+    title: "Iphone 16",
   },
   {
     image: image5,
-    title: "Secure Data Wipe",
-    subtitle: "Your data, safely erased.",
+    title: "Iphone 11",
   },
   {
     image: image8,
-    title: "Device Recycling",
-    subtitle: "Eco-friendly recycling solutions",
+    title: "Pixel 8",
   },
   {
     image: image9,
-    title: "Laptop Repair",
-    subtitle: "Affordable device repairs",
+    title: "Aero Gaming Notebook",
   },
   {
     image: image10,
-    title: "Battery Replacement",
-    subtitle: "Extend device life with new batteries",
+    title: "ViewSonic VX2776",
   },
   {
     image: image6,
-    title: "Screen Replacement",
-    subtitle: "Fix cracked screens quickly",
+    title: "Monitor with keyboard",
   },
 ];
 
@@ -84,9 +77,9 @@ const TradeIn = () => {
   const [address, setAddress] = useState("");
   const [messageVisible, setMessageVisible] = useState(false);
 
-  const filteredItems = items.filter((item) =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+ const filteredItems = items.filter((item) =>
+  item.title.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
   const handleConfirm = () => {
     console.log({ capacity, processor, memory, version });
@@ -99,17 +92,17 @@ const TradeIn = () => {
   };
 
   // Carousel settings
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    responsive: [
-      { breakpoint: 960, settings: { slidesToShow: 2 } },
-      { breakpoint: 600, settings: { slidesToShow: 1 } },
-    ],
-  };
+const settings = {
+  dots: true,
+  infinite: filteredItems.length > 3,  // disable infinite if less than 4
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  responsive: [
+    { breakpoint: 960, settings: { slidesToShow: 2 } },
+    { breakpoint: 600, settings: { slidesToShow: 1 } },
+  ],
+};
 
   return (
     <>
@@ -141,64 +134,70 @@ const TradeIn = () => {
               }}
             />
           </Box>
-              <Box sx={{
-        '& .slick-slide > div': {
-          padding: '0 8px', // Adds gap between cards (16px total)
-        },
-        '& .slick-dots li button:before': {
-          color: '#3a511e',
-        },
-        '& .slick-dots li.slick-active button:before': {
-          color: '#3a511e',
-        },
-      }}>
-         {/* Carousel */}
-          <Slider {...settings}>
-            {filteredItems.map((item, index) => (
-              <Box key={index} sx={{ px: 5, py: 1 }}>
-                <Card
-                  sx={{
-                    boxShadow: 3,
-                    borderRadius: 2,
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="180"
-                    image={item.image}
-                    alt={item.title}
-                  />
-                  <CardContent>
-                    <Typography
-                      variant="subtitle1"
-                      align="center"
-                      sx={{ fontWeight: "bold" }}
-                    >
-                      {item.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      align="center"
-                      sx={{ color: "text.secondary" }}
-                    >
-                      {item.subtitle}
-                    </Typography>
-                  </CardContent>
-                  <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-                    <Button variant="contained" color="primary">
-                      Select
-                    </Button>
-                  </Box>
-                </Card>
-              </Box>
-            ))}
-          </Slider>
-      </Box>
-         
+          <Box sx={{
+            '& .slick-slide > div': {
+              padding: '0 8px', // Adds gap between cards (16px total)
+            },
+            '& .slick-dots li button:before': {
+              color: '#3a511e',
+            },
+            '& .slick-dots li.slick-active button:before': {
+              color: '#3a511e',
+            },
+          }}>
+            {/* Carousel */}
+            <Slider {...settings}>
+              {filteredItems.map((item, index) => (
+                <Box key={index} sx={{ px: 5, py: 1 }}>
+                  <Card
+                    sx={{
+                      boxShadow: 3,
+                      borderRadius: 2,
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      transition: 'transform 0.2s, box-shadow 0.2s',
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        boxShadow: 6,
+                      }
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="180"
+                      image={item.image}
+                      alt={item.title}
+                      sx={{ objectFit: 'contain', backgroundColor: '#f5f5f5' }}
+                    />
+                    <CardContent sx={{ padding: 2 }}>
+                      <Typography
+                        variant="subtitle1"
+                        align="center"
+                        sx={{ fontWeight: "bold" }}
+                      >
+                        {item.title}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        align="center"
+                        sx={{ color: "text.secondary" }}
+                      >
+                        {item.subtitle}
+                      </Typography>
+                    </CardContent>
+                    <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+                      <Button variant="contained" color="primary">
+                        Select
+                      </Button>
+                    </Box>
+                  </Card>
+                </Box>
+              ))}
+            </Slider>
+          </Box>
+
 
           {/* Can't find device section */}
           <Box sx={{ mt: 10, textAlign: "center" }}>
